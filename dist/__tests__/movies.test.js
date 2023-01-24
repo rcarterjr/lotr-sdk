@@ -57,7 +57,6 @@ describe("Request all movie quotes for one specific movie (only working for the 
             }
         ];
         const quote = yield client.getQuoteByMovieId("5cd95395de30eff6ebccde5c");
-        console.log("QUOTE", quote);
         expect(quote).toEqual(expect.arrayContaining(expected));
     }));
 });

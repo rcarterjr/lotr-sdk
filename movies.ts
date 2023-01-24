@@ -1,21 +1,17 @@
 // const fetch = require("node-fetch");
 const axios = require("axios");
-
 const BASE_URL = "https://the-one-api.dev/v2";
 
-type Movie = {
-  _id: string;
-  name: string;
-  runtimeInMinutes: number;
-  budgetInMillions: number;
-  boxOfficeRevenueInMillions: number;
-  academyAwardNominations: number;
-  academyAwardWins: number;
-  rottenTomatoesScore: number;
-};
-
-// want to create an SDK that gets all movies, gets a movie by id, gets a quote by movie id
-// want to create a class that has methods that return the data we want
+// type Movie = {
+//   _id: string;
+//   name: string;
+//   runtimeInMinutes: number;
+//   budgetInMillions: number;
+//   boxOfficeRevenueInMillions: number;
+//   academyAwardNominations: number;
+//   academyAwardWins: number;
+//   rottenTomatoesScore: number;
+// };
 
 class MovieClient {
   constructor(private apiKey: string) {
