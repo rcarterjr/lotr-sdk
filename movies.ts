@@ -21,7 +21,7 @@ class MovieClient {
     }
   }
 
-  async getMovieById(id: string): Promise<Movie | undefined> {
+  async getMovieById(id: string): Promise<Docs | undefined> {
     try {
       if (!id) throw new Error("No id provided");
 
@@ -30,14 +30,14 @@ class MovieClient {
           Authorization: `Bearer ${this.apiKey}`
         }
       });
-      const data: any = await response.data; // TODO: update this type
+      const data: Response = await response.data; // TODO: update this type
       return data.docs;
     } catch (error) {
       console.error(error);
     }
   }
 
-  async getQuotesByMovieId(id: string): Promise<string | undefined> {
+  async getQuotesByMovieId(id: string): Promise<Docs | undefined> {
     try {
       if (!id) throw new Error("No id provided");
 
@@ -46,7 +46,7 @@ class MovieClient {
           Authorization: `Bearer ${this.apiKey}`
         }
       });
-      const data: any = await response.data; // TODO: update this type
+      const data: Response = await response.data; // TODO: update this type
       return data.docs;
     } catch (error) {
       console.error(error);
@@ -61,7 +61,7 @@ class MovieClient {
     filter: Filter,
     operator: "<" | ">" | "<=" | ">=" | "==",
     value: number
-  ): Promise<Movie | undefined> {
+  ): Promise<Docs | undefined> {
     try {
       if (!filter || !operator || value == null)
         throw new Error("invalid params");
@@ -74,7 +74,7 @@ class MovieClient {
           }
         }
       );
-      const data: any = await response.data; // TODO: update this type
+      const data: Response = await response.data; // TODO: update this type
       return data.docs;
     } catch (error) {
       console.error(error);

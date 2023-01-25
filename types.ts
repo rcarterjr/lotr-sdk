@@ -27,3 +27,14 @@ enum FilterEnum {
 }
 
 type Filter = keyof typeof FilterEnum;
+
+type Docs = Movie[] | Quote[] | Movie | Quote;
+
+type Response = {
+  docs: Docs;
+  total: number;
+  limit: number;
+  page: number;
+  pages: number;
+  offset: number;
+};
