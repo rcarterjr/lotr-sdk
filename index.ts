@@ -6,14 +6,14 @@ class MovieClient {
     this.apiKey = apiKey;
   }
 
-  async getAllMovies(): Promise<Movie[] | undefined> {
+  async getAllMovies(): Promise<Docs | undefined> {
     try {
       const response = await axios(`${BASE_URL}/movie`, {
         headers: {
           Authorization: `Bearer ${this.apiKey}`
         }
       });
-      const data: any = await response.data; // TODO: update this type
+      const data: Response = await response.data;
       return data.docs;
     } catch (error) {
       console.error(error);
