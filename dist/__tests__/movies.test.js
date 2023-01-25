@@ -8,55 +8,39 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 require("dotenv").config();
 const { API_KEY } = process.env;
+const movies_1 = require("../fixtures/movies");
 const movieClient = require("../movies");
 const client = new movieClient(API_KEY);
-const movieIds = [
-    "5cd95395de30eff6ebccde56",
-    "5cd95395de30eff6ebccde57",
-    "5cd95395de30eff6ebccde58",
-    "5cd95395de30eff6ebccde59",
-    "5cd95395de30eff6ebccde5a",
-    "5cd95395de30eff6ebccde5b",
-    "5cd95395de30eff6ebccde5c",
-    "5cd95395de30eff6ebccde5d"
-];
 describe('List of all movies, including the "The Lord of the Rings" and the "The Hobbit" trilogies', () => {
     it("should return a list of all movies", () => __awaiter(void 0, void 0, void 0, function* () {
         const movies = yield client.getAllMovies();
-        expect(movies.map((m) => m._id)).toEqual(movieIds);
+        expect(movies).toEqual(movies_1.allMovies);
     }));
 });
 describe("Request one specific movie", () => {
     it("should return the entire movie object", () => __awaiter(void 0, void 0, void 0, function* () {
-        const movie = yield client.getMovieById("5cd95395de30eff6ebccde56");
-        expect(movie).toEqual([
-            {
-                _id: "5cd95395de30eff6ebccde56",
-                name: "The Lord of the Rings Series",
-                runtimeInMinutes: 558,
-                budgetInMillions: 281,
-                boxOfficeRevenueInMillions: 2917,
-                academyAwardNominations: 30,
-                academyAwardWins: 17,
-                rottenTomatoesScore: 94
-            }
-        ]);
+        const { id, movie: expectedMovie } = movies_1.idAndMovie;
+        const movie = yield client.getMovieById(id);
+        expect(movie).toEqual([expectedMovie]);
     }));
 });
 describe("Request all movie quotes for one specific movie (only working for the LotR trilogy)", () => {
     it("should return a quote from the movie, give the movie _id", () => __awaiter(void 0, void 0, void 0, function* () {
-        const expected = [
-            {
-                _id: "5cd96e05de30eff6ebcced61",
-                dialog: "Who is she? This woman you sing of?",
-                movie: "5cd95395de30eff6ebccde5c",
-                character: "5cd99d4bde30eff6ebccfc15",
-                id: "5cd96e05de30eff6ebcced61"
-            }
-        ];
-        const quote = yield client.getQuoteByMovieId("5cd95395de30eff6ebccde5c");
-        expect(quote).toEqual(expect.arrayContaining(expected));
+        const { id, quote: expected } = movies_1.idAndQuote;
+        const quote = yield client.getQuotesByMovieId(id);
+        expect(quote).toEqual(expect.arrayContaining([expected]));
+    }));
+});
+describe("Request all movies with the given Filters", () => {
+    it("should return all movies with a budget under 100 million", () => __awaiter(void 0, void 0, void 0, function* () {
+        const movies = yield client.getMovieByFilter("budgetInMillions", "<", 100);
+        expect(movies).toEqual(movies_1.budgetUnder100);
+    }));
+    it("should return all movies with a rotten tomatoe score greater than or equal 94", () => __awaiter(void 0, void 0, void 0, function* () {
+        const movies = yield client.getMovieByFilter("rottenTomatoesScore", ">=", 94);
+        expect(movies).toEqual(movies_1.greaterOrEqual94Tomatoes);
     }));
 });

@@ -11,16 +11,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 // const fetch = require("node-fetch");
 const axios = require("axios");
 const BASE_URL = "https://the-one-api.dev/v2";
-// type Movie = {
-//   _id: string;
-//   name: string;
-//   runtimeInMinutes: number;
-//   budgetInMillions: number;
-//   boxOfficeRevenueInMillions: number;
-//   academyAwardNominations: number;
-//   academyAwardWins: number;
-//   rottenTomatoesScore: number;
-// };
 class MovieClient {
     constructor(apiKey) {
         this.apiKey = apiKey;
@@ -28,35 +18,76 @@ class MovieClient {
     }
     getAllMovies() {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield axios(`${BASE_URL}/movie`, {
-                headers: {
-                    Authorization: `Bearer ${this.apiKey}`
-                }
-            });
-            const data = yield response.data; // TODO: update this type
-            return data.docs;
+            try {
+                const response = yield axios(`${BASE_URL}/movie`, {
+                    headers: {
+                        Authorization: `Bearer ${this.apiKey}`
+                    }
+                });
+                const data = yield response.data; // TODO: update this type
+                return data.docs;
+            }
+            catch (error) {
+                console.error(error);
+            }
         });
     }
     getMovieById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield axios(`${BASE_URL}/movie/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${this.apiKey}`
-                }
-            });
-            const data = yield response.data; // TODO: update this type
-            return data.docs;
+            try {
+                if (!id)
+                    throw new Error("No id provided");
+                const response = yield axios(`${BASE_URL}/movie/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${this.apiKey}`
+                    }
+                });
+                const data = yield response.data; // TODO: update this type
+                return data.docs;
+            }
+            catch (error) {
+                console.error(error);
+            }
         });
     }
-    getQuoteByMovieId(id) {
+    getQuotesByMovieId(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield axios(`${BASE_URL}/movie/${id}/quote`, {
-                headers: {
-                    Authorization: `Bearer ${this.apiKey}`
-                }
-            });
-            const data = yield response.data; // TODO: update this type
-            return data.docs;
+            try {
+                if (!id)
+                    throw new Error("No id provided");
+                const response = yield axios(`${BASE_URL}/movie/${id}/quote`, {
+                    headers: {
+                        Authorization: `Bearer ${this.apiKey}`
+                    }
+                });
+                const data = yield response.data; // TODO: update this type
+                return data.docs;
+            }
+            catch (error) {
+                console.error(error);
+            }
+        });
+    }
+    /*
+      this method compares `value` with number values such as `budgetInMillions` or `runtimeInMinutes`
+      Ex: /movie?budgetInMillions<100
+    */
+    getMovieByFilter(filter, operator, value) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                if (!filter || !operator || value == null)
+                    throw new Error("invalid params");
+                const response = yield axios(`${BASE_URL}/movie?${filter}${operator}${value}`, {
+                    headers: {
+                        Authorization: `Bearer ${this.apiKey}`
+                    }
+                });
+                const data = yield response.data; // TODO: update this type
+                return data.docs;
+            }
+            catch (error) {
+                console.error(error);
+            }
         });
     }
 }

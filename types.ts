@@ -8,3 +8,22 @@ type Movie = {
   academyAwardWins: number;
   rottenTomatoesScore: number;
 };
+
+type Quote = {
+  _id: string;
+  dialog: string;
+  movie: string;
+  character: string;
+  id: string;
+};
+
+enum FilterEnum {
+  budgetInMillions,
+  runtimeInMinutes,
+  academyAwardNominations,
+  academyAwardWins,
+  boxOfficeRevenueInMillions,
+  rottenTomatoesScore
+}
+
+type Filter = keyof typeof FilterEnum;
