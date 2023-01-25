@@ -2,7 +2,7 @@
   "name": "russ-sdk",
   "version": "1.0.0",
   "description": "LibLab Take home project - The Lord of the Rings SDK",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "test": "jest"
   },

@@ -9,7 +9,7 @@ import {
   greaterOrEqual94Tomatoes
 } from "../fixtures/movies";
 
-const movieClient = require("../movies");
+const movieClient = require("russ-sdk");
 const client = new movieClient(API_KEY);
 
 describe('List of all movies, including the "The Lord of the Rings" and the "The Hobbit" trilogies', () => {

@@ -12,7 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require("dotenv").config();
 const { API_KEY } = process.env;
 const movies_1 = require("../fixtures/movies");
-const movieClient = require("../movies");
+// const movieClient = require("../index");
+const movieClient = require("russ-sdk");
 const client = new movieClient(API_KEY);
 describe('List of all movies, including the "The Lord of the Rings" and the "The Hobbit" trilogies', () => {
     it("should return a list of all movies", () => __awaiter(void 0, void 0, void 0, function* () {
